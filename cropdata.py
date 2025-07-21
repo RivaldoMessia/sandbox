@@ -88,3 +88,7 @@ elif predicted_yield > 11:
     st.info("✅ Conditions are favorable for high yield.")
 else:
     st.write("🟡 Moderate yield expected. You may fine-tune fertilizer or irrigation levels.")
+
+if st.sidebar.button("Logout"):
+    st.session_state["authenticated"] = False
+    st.rerun()
