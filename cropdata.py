@@ -5,6 +5,40 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
+
+
+
+
+
+
+
+# ---- USER LOGIN ----
+def login():
+    st.title("🔐 Crop Yield Dashboard Login")
+
+    username = st.text_input("Username")
+    password = st.text_input("Password", type="password")
+
+    if st.button("Login"):
+        if username == "admin" and password == "1234":  # Change to your own credentials
+            st.session_state["authenticated"] = True
+            st.success("Logged in successfully")
+        else:
+            st.error("Incorrect username or password")
+
+
+# Initialize session state
+if "authenticated" not in st.session_state:
+    st.session_state["authenticated"] = False
+
+if not st.session_state["authenticated"]:
+    login()
+    st.stop()  # Prevent the rest of the app from loading
+
+
+
+
+
 # Load data
 df = pd.read_excel("C:/Users/rival/OneDrive/Documents/2025 Documents/IIAFRICA/Capstone/Crop yield data sheet.xlsx")
 
