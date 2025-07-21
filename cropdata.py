@@ -102,36 +102,26 @@ import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 import numpy as np
 
-# ---- USER LOGIN ----
-
-# Step 1: Initialize session state
+# ---- SESSION STATE LOGIN ----
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
-if "pending_login" not in st.session_state:
-    st.session_state["pending_login"] = False
 
-# Step 2: Deferred rerun if login is successful
-if st.session_state["pending_login"]:
-    st.session_state["authenticated"] = True
-    st.session_state["pending_login"] = False
-    st.experimental_rerun()
-
-# Step 3: Login logic
+# ---- LOGIN SCREEN ----
 if not st.session_state["authenticated"]:
     st.title("🔐 Crop Yield Dashboard Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
-
-    if st.button("Login"):
+    
+    login_button = st.button("Login")
+    if login_button:
         if username == "admin" and password == "1234":
-            st.session_state["pending_login"] = True  # Flag for rerun
-            st.success("Login successful.")
-            st.stop()
+            st.session_state["authenticated"] = True
+            st.success("Login successful. Use the sidebar to explore the dashboard.")
         else:
             st.error("Incorrect username or password.")
     st.stop()
-    
-# ---- Main App ----
+
+# ---- MAIN DASHBOARD ----
 
 # Load data
 df = pd.read_excel("C:/Users/rival/OneDrive/Documents/2025 Documents/IIAFRICA/Capstone/Crop yield data sheet.xlsx")
@@ -181,12 +171,7 @@ elif predicted_yield > 11:
 else:
     st.write("🟡 Moderate yield expected. You may fine-tune fertilizer or irrigation levels.")
 
-# --- Logout Option ---
+# ---- LOGOUT ----
 if st.sidebar.button("Logout"):
     st.session_state["authenticated"] = False
     st.experimental_rerun()
-
-
-# if st.sidebar.button("Logout"):
-#     st.session_state["authenticated"] = False
-#     st.rerun()
