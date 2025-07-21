@@ -15,17 +15,16 @@ import numpy as np
 # ---- USER LOGIN ----
 def login():
     st.title("🔐 Crop Yield Dashboard Login")
-
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
-
+    
     if st.button("Login"):
-        if username == "admin" and password == "1234":  # Change to your own credentials
+        if username == "admin" and password == "1234":
             st.session_state["authenticated"] = True
-            st.success("Logged in successfully")
+            st.success("Login successful. Please wait...")
+            st.experimental_rerun()  # 🔁 Important: Triggers re-run after successful login
         else:
-            st.error("Incorrect username or password")
-
+            st.error("Incorrect username or password.")
 
 # Initialize session state
 if "authenticated" not in st.session_state:
