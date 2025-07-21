@@ -17,12 +17,13 @@ def login():
     st.title("🔐 Crop Yield Dashboard Login")
     username = st.text_input("Username")
     password = st.text_input("Password", type="password")
-    
+
     if st.button("Login"):
         if username == "admin" and password == "1234":
             st.session_state["authenticated"] = True
             st.success("Login successful. Please wait...")
-            st.experimental_rerun()  # 🔁 Important: Triggers re-run after successful login
+            st.experimental_rerun()
+            return  # <-- Fix: End the function cleanly
         else:
             st.error("Incorrect username or password.")
 
@@ -30,9 +31,10 @@ def login():
 if "authenticated" not in st.session_state:
     st.session_state["authenticated"] = False
 
+# Redirect to login if not authenticated
 if not st.session_state["authenticated"]:
     login()
-    st.stop()  # Prevent the rest of the app from loading
+    st.stop()
 
 
 
